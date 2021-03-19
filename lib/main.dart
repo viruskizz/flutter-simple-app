@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
+
+import 'package:simple_app/providers/counter_provider.dart';
 import 'package:simple_app/screens/home_screen.dart';
 import 'package:simple_app/screens/profile_screen.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  await DotEnv.load(fileName: ".env");
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => CounterProvider()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
